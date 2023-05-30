@@ -147,7 +147,7 @@ return [
         'area'                     => '지역',
         'available'                => '사용 가능',
         'birthday'                 => '생신',
-        'body'                     => '몸',
+        'body'                     => '본문',
         'city'                     => '도시',
         'content'                  => '내용',
         'country'                  => '나라',
