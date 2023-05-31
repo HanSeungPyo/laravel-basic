@@ -48,10 +48,21 @@ Route::post('/articles', function(Request $request){
     php artisan make:model Article
     app/modles/article 모델 생성됨. 테이블명, 모델명 일치시 알아서 상호작용
    */
-    $article = new Article;
-    $article->body = $input['body'];
-    $article->user_id = Auth::id();
-    $article->save();
+
+    //$article = new Article;
+    //$article->body = $input['body'];
+    //$article->user_id = Auth::id();
+    //$article->save();
+
+      //대량할당 방식
+      //Article::create($input);
+
+      //대량할당 방식2
+      Article::create([
+          'body' => $input['body'],
+          'user_id' => Auth::id()
+      ]);
+
 
     return view('welcome');
 });
