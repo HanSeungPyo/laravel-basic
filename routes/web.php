@@ -57,8 +57,8 @@ Route::post('/articles', function(Request $request){
       
 
 
-    return view('welcome');
-});
+    return redirect()->route('articles.index');
+})->name("articles.store");
 
 Route::get('articles/index',function(Request $request){
     $perPage = $request->input('perPage', 5);
@@ -68,6 +68,6 @@ Route::get('articles/index',function(Request $request){
    ->paginate($perPage);
 
     return view('articles.index', ['articles' => $articles]);
-});
+})->name("articles.index");
 
 require __DIR__.'/auth.php';
