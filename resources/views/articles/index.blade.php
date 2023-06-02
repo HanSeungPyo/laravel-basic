@@ -13,7 +13,9 @@
         <h1 class="text-2xl">글목록</h1>
         @foreach ($articles as $article)
             <div class="background-white border rounded mb-3">
-                <p>{{$article->body}}</p>   
+                <p>
+                    <a href="{{route('articles.show',['article'=> $article->id])}}">{{$article->body}}</a>
+                </p>   
                 <p>{{$article->user->name}}</p>   
                 <p>{{$article->created_at->diffForHumans()}}</p>   
             </div>

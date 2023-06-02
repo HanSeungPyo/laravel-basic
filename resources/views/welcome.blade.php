@@ -35,8 +35,8 @@
                 간단한 소셜 미디어 웹사이트
                 @auth
                 <div>
-                    <a href="/articles/create">글쓰기</a>
-                    <a href="/articles/index">글목록</a>
+                    <a href="{{route('articles.create')}}">글쓰기</a>
+                    <a href="{{route('articles.index')}}">글목록</a>
                 </div>
                 @endauth
             </div>

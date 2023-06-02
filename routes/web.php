@@ -54,20 +54,26 @@ Route::post('/articles', function(Request $request){
     $article->user_id = Auth::id();
     $article->save();
 
-      
-
-
     return redirect()->route('articles.index');
+    
 })->name("articles.store");
 
 Route::get('articles/index',function(Request $request){
+    
     $perPage = $request->input('perPage', 5);
 
-   $articles = Article::with('user')
-   ->latest()
-   ->paginate($perPage);
+    $articles = Article::with('user')
+    ->latest()
+    ->paginate($perPage);
 
     return view('articles.index', ['articles' => $articles]);
+
 })->name("articles.index");
+
+Route::get('articles/{article}', function(Article $article){
+    return view('articles.show', ['article' => $article]);
+})->name('articles.show');
+
+
 
 require __DIR__.'/auth.php';
