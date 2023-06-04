@@ -18,6 +18,12 @@
                 </p>   
                 <p>{{$article->user->name}}</p>   
                 <p>{{$article->created_at->diffForHumans()}}</p>   
+
+                <div class="flex flex-row mt-2 mb-3">
+                    <p class="mr-1">
+                        <a href="{{route('articles.edit',['article'=> $article->id])}}" class="button rounded bg-blue-500 px-2 py-1 ml-1 text-xs  text-white">수정</a>
+                    </p>
+                </div>
             </div>
         @endforeach
     </div>

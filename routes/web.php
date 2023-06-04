@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/articles/create', function(){
     return view('articles.create');
-});
+})->name('articles.create');
 
 Route::post('/articles', function(Request $request){
 
@@ -74,6 +74,23 @@ Route::get('articles/{article}', function(Article $article){
     return view('articles.show', ['article' => $article]);
 })->name('articles.show');
 
+Route::get('articles/edit/{article}',function(Article $article){
 
+    return view('articles.edit', ['article' => $article]);
+})->name('articles.edit');
+
+Route::PUT('articles/{article}',function(Request $request, Article $article){
+
+      //유효성 검사 
+      $input = $request->validate([
+        'body' => ['required','string','max:255'], //필수, 문자, 맥스 255
+    ]);
+
+    $article->body = $input['body'];
+    $article->save();
+
+    return redirect()->route('articles.index');
+
+})->name('articles.update');
 
 require __DIR__.'/auth.php';
