@@ -93,4 +93,10 @@ Route::PUT('articles/{article}',function(Request $request, Article $article){
 
 })->name('articles.update');
 
+
+Route::delete('articles/{article}', function (Article $article) {
+    $article->delete();
+    return redirect()->route('articles.index');
+})->name('articles.delete');
+
 require __DIR__.'/auth.php';
