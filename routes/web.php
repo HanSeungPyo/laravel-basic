@@ -4,6 +4,7 @@ use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,18 +34,17 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/articles/create', [ArtisanController::class, 'create'])->name('articles.create');
+Route::controller(ArtisanController::class)->group(function(){
+    Route::get('/articles/create', 'create')->name('articles.create');
+    Route::post('/articles', 'store')->name("articles.store");
+    Route::get('articles/index', 'index')->name("articles.index");
+    Route::get('articles/{article}', 'show')->name('articles.show');
+    Route::get('articles/edit/{article}', 'edit')->name('articles.edit');
+    Route::PUT('articles/{article}', 'update')->name('articles.update');
+    Route::delete('articles/{article}', 'destroy')->name('articles.delete');
+});
 
-Route::post('/articles', [ArtisanController::class, 'store'])->name("articles.store");
 
-Route::get('articles/index',[ArtisanController::class, 'index'])->name("articles.index");
 
-Route::get('articles/{article}', [ArtisanController::class, 'show'])->name('articles.show');
-
-Route::get('articles/edit/{article}',[ArtisanController::class, 'edit'])->name('articles.edit');
-
-Route::PUT('articles/{article}',[ArtisanController::class, 'update'])->name('articles.update');
-
-Route::delete('articles/{article}', [ArtisanController::class, 'destroy'])->name('articles.delete');
 
 require __DIR__.'/auth.php';
