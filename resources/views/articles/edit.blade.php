@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container p-5">
-        <h1 class="text-2xl">글쓰기</h1>
+        <h1 class="text-2xl">글 수정</h1>
         <form action="{{route('articles.update',['article' => $article->id])}}" method="post" class="mt-3">
             @csrf
             @method('PUT')
