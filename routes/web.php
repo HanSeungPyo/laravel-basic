@@ -44,7 +44,4 @@ Route::controller(ArtisanController::class)->group(function(){
     Route::delete('articles/{article}', 'destroy')->name('articles.delete');
 });
 
-
-
-
 require __DIR__.'/auth.php';
