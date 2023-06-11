@@ -34,14 +34,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::controller(ArtisanController::class)->group(function(){
-    Route::get('/articles/create', 'create')->name('articles.create');
-    Route::post('/articles', 'store')->name("articles.store");
-    Route::get('articles/index', 'index')->name("articles.index");
-    Route::get('articles/{article}', 'show')->name('articles.show');
-    Route::get('articles/edit/{article}', 'edit')->name('articles.edit');
-    Route::PUT('articles/{article}', 'update')->name('articles.update');
-    Route::delete('articles/{article}', 'destroy')->name('articles.delete');
-});
+
+Route::resource('articles', ArtisanController::class);
 
 require __DIR__.'/auth.php';

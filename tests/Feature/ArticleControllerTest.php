@@ -102,7 +102,7 @@ class ArticleControllerTest extends TestCase
     public function 글을_삭제_할_수_있다(): void{
         $article = Article::factory()->create();
 
-        $this->delete(route('articles.delete', ['article' => $article->id]))
+        $this->delete(route('articles.destroy', ['article' => $article->id]))
         ->assertRedirect(route('articles.index'));
 
         #글이 삭제되었는지 확인
