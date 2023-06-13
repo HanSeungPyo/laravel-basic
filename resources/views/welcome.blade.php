@@ -33,12 +33,10 @@
 
             <div class="max-w-7xl mx-auto p-6 lg:p-8">
                 간단한 소셜 미디어 웹사이트
-                @auth
                 <div>
                     <a href="{{route('articles.create')}}">글쓰기</a>
                     <a href="{{route('articles.index')}}">글목록</a>
                 </div>
-                @endauth
             </div>
         </div>
     </body>

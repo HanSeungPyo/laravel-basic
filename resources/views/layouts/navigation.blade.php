@@ -26,6 +26,7 @@
                 </div>
             </div>
 
+            @auth
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
@@ -59,6 +60,17 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+            @else
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('log in') }}
+                </x-nav-link>
+
+                 <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    {{ __('register') }}
+                </x-nav-link>
+            </div>
+            @endauth
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
@@ -88,6 +100,7 @@
             </x-responsive-nav-link>
         </div>
 
+        @auth
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
@@ -112,5 +125,18 @@
                 </form>
             </div>
         </div>
+        @else
+        <div class="pt-4 pb-1 border-t border-gray-200">
+            <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('login')">
+                    {{ __('log in') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('register')">
+                    {{ __('register') }}
+                </x-responsive-nav-link>
+            </div>
+        </div>
+        @endauth
     </div>
 </nav>

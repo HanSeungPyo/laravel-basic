@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ArtisanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }
+
     public function create(){
         return view('articles.create');
     }
