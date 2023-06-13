@@ -175,7 +175,7 @@ class ArticleControllerTest extends TestCase
 
         $user = User::factory()->create();  
 
-        $article = Article::factory()->create();
+        $article = Article::factory()->create(['user_id' => $user->id]);
 
         $this->actingAs($user)
         ->delete(route('articles.destroy', ['article' => $article->id]))
