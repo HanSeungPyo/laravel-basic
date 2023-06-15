@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateArticleRequest;
+use App\Http\Requests\DeleteArticleRequest;
+use App\Http\Requests\EditArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +15,7 @@ class ArtisanController extends Controller
 {
     public function __construct()
     {
+        #개별 글, 글목록 제외한 권한확인 
         $this->middleware('auth')->except(['index','show']);
     }
 
@@ -18,11 +23,9 @@ class ArtisanController extends Controller
         return view('articles.create');
     }
 
-    public function store(Request $request){
+    public function store(CreateArticleRequest $request){
         //유효성 검사 
-        $input = $request->validate([
-            'body' => ['required','string','max:255'], //필수, 문자, 맥스 255
-        ]);
+        $input = $request->validated();
     
         $article = new Article();
         $article->body = $input['body'];
@@ -48,21 +51,14 @@ class ArtisanController extends Controller
         return view('articles.show', ['article' => $article]);
     }
 
-    public function edit(Article $article){
-
-        $this->authorize('update', $article);
-
+    public function edit(EditArticleRequest $request, Article $article){
         return view('articles.edit', ['article' => $article]);
     }
 
-    public function update(Request $request, Article $article){
-
-        $this->authorize('update', $article);
+    public function update(UpdateArticleRequest $request, Article $article){
 
         //유효성 검사 
-        $input = $request->validate([
-            'body' => ['required','string','max:255'], //필수, 문자, 맥스 255
-        ]);
+        $input = $request->validated();
   
         $article->body = $input['body'];
         $article->save();
@@ -70,10 +66,7 @@ class ArtisanController extends Controller
         return redirect()->route('articles.index');
     }
 
-    public function destroy(Article $article){
-
-        $this->authorize('delete', $article);
-
+    public function destroy(DeleteArticleRequest $request, Article $article){
         $article->delete();
         return redirect()->route('articles.index');
     }
