@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArtisanController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -36,5 +37,6 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('articles', ArtisanController::class);
+Route::resource('comments', CommentController::class);
 
 require __DIR__.'/auth.php';
