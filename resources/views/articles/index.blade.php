@@ -10,7 +10,13 @@
                     <a href="{{route('articles.show',['article'=> $article->id])}}">{{$article->body}}</a>
                 </p>   
                 <p>{{$article->user->name}}</p>   
-                <p>{{$article->created_at->diffForHumans()}}</p>   
+                <p class="text-xs text-gray-500">
+                    {{$article->created_at->diffForHumans()}}
+                    
+                    <a href="{{route('articles.show',['article'=> $article->id])}}">
+                    <span>댓글 {{$article->comments_count}}@if ($article->recent_comments_exists) (new)  @endif</span>
+                    </a>
+                </p>   
 
                 <x-article-button-group :article=$article/>
             </div>

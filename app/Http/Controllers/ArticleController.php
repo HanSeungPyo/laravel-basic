@@ -9,6 +9,7 @@ use App\Http\Requests\EditArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -40,6 +41,10 @@ class ArticleController extends Controller
         $perPage = $request->input('perPage', 5);
 
         $articles = Article::with('user')
+        ->withCount('comments')
+        ->withExists(['comments as recent_comments_exists' => function($query){
+            $query->where('created_at', '>', Carbon::now()->subDay());
+        }])
         ->latest()
         ->paginate($perPage);
     
@@ -50,6 +55,7 @@ class ArticleController extends Controller
     public function show(Article $article){
 
         $article->load('comments.user');
+        $article->loadCount('comments');
         return view('articles.show', ['article' => $article]);
     }
 
