@@ -4,13 +4,31 @@
             <div class="text-center">
                 <h1 class="text-center text-2xl"><b>{{$user->name}}</b></h1>
                 게시물 {{$user->articles->count()}}
+                구독자 {{$user->followers()->count()}}
             </div>
+
+            @if(Auth::id() != $user->id)
+            <div class="text-center">
+                @if(Auth::user()->isFollowing($user))
+                    <form action="{{route('unfollow', ['user'=>$user->username])}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <x-danger-button>구독해지</x-danger-button>
+                    </form>
+                @else
+                    <form action="{{route('follow', ['user'=>$user->username])}}" method="post">
+                        @csrf
+                        <x-primary-button>구독하기</x-primary-button>
+                    </form>
+                @endif
+            </div>
+            @endif
 
             <div class="">
                @forelse ($user->articles as $article)
                 <x-list-article-item :article=$article/>
                @empty
-                   <p>게시물이 없습니다.</p>
+                   <p class="text-center">게시물이 없습니다.</p>
                @endforelse     
             </div>
         </div>
