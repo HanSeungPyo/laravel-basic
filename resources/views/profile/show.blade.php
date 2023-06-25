@@ -7,7 +7,7 @@
                 구독자 {{$user->followers()->count()}}
             </div>
 
-            @if(Auth::id() != $user->id)
+            @if(Auth::check() && Auth::id() != $user->id)
             <div class="text-center">
                 @if(Auth::user()->isFollowing($user))
                     <form action="{{route('unfollow', ['user'=>$user->username])}}" method="post">
