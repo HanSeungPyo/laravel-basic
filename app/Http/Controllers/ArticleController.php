@@ -11,6 +11,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class ArticleController extends Controller
 {
@@ -38,6 +39,8 @@ class ArticleController extends Controller
     }
 
     public function index(Request $request){
+
+        $q=$request->input('q');
         $perPage = $request->input('perPage', 5);
 
         $articles = Article::with('user')
@@ -45,10 +48,22 @@ class ArticleController extends Controller
         ->withExists(['comments as recent_comments_exists' => function($query){
             $query->where('created_at', '>', Carbon::now()->subDay());
         }])
+        ->when($q, function($query, $q){
+            $query->where('body', 'like', "%$q%")
+            ->orWhereHas('user', function(Builder $query) use ($q) {
+                $query->where('username', 'like', "%$q%");
+            });
+        })
         ->latest()
         ->paginate($perPage);
-    
-        return view('articles.index', ['articles' => $articles]);
+        
+        $articles->withQueryString();
+
+        return view('articles.index', 
+        [
+            'articles' => $articles,
+            'q' => $q
+        ]);
     
     }
 
